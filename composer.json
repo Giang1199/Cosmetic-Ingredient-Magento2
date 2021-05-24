@@ -1,0 +1,20 @@
+{
+  "name": "dtn/module-ingredients-product",
+  "description": "Magento 2 CRUD module",
+  "type": "magento2-module",
+  "version": "0.1.0",
+  "authors": [
+    {
+      "name": "Truong Giang",
+      "email": "giangtruonggh@gmail.com"
+    }
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Dtn\\Ingredients\\": ""
+    }
+  }
+}
