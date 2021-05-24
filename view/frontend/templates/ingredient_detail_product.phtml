@@ -1,0 +1,27 @@
+<?php
+$productInfo = \Magento\Framework\App\ObjectManager::getInstance()->get('Dtn\Cosmetic\Block\ProductInfo');
+$currentAttributeValue = $productInfo->getCurrentProduct()->getData('ingredient_cosmetic_attribute');
+$convertedAttributeValue = explode(',', $currentAttributeValue);
+
+//Check if not cosmetic category then hide detail product tab
+$ingredientModel = $productInfo->getModel();
+$ingredientResource = $productInfo->getResourceModel();
+?>
+<?php
+if ($productInfo->getCurrentProduct()->getData('attribute_set_id') == 15) {
+    ?>
+    <p><?php foreach ($convertedAttributeValue as $value) {
+            $value = json_decode($value);
+            $ingredientResource->load($ingredientModel, $value);
+            $modelData = $ingredientModel->getData();
+            $img = json_decode($modelData['img'])[0]->name;
+            ?>
+            <img style="max-width: 200px ; height: 200px"
+                 src="https://magento242.local/media/ingredientImg/<?php echo $img; ?>">
+            <?
+        }
+        ?>
+    </p>
+    <?php
+}
+?>
