@@ -78,7 +78,6 @@ class ImgUpload extends \Magento\Backend\App\Action
      * Upload file controller action
      * @return ResultInterface
      */
-
     public function execute()
     {
         $files = $this->getRequest()->getFiles();

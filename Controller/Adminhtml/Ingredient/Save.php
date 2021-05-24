@@ -11,6 +11,9 @@ use Magento\Backend\App\Action\Context;
 
 class Save extends Action
 {
+    /**
+     * @var Json
+     */
     protected $serialize;
 
     /**
@@ -23,13 +26,19 @@ class Save extends Action
      */
     protected $cosmeticIngredientsResource;
 
+    /**
+     * Save constructor.
+     * @param Context $context
+     * @param CosmeticIngredientsFactory $cosmeticIngredientsFactory
+     * @param CosmeticIngredients $cosmeticIngredients
+     * @param Json $json
+     */
     public function __construct
     (
         Context $context,
         CosmeticIngredientsFactory $cosmeticIngredientsFactory,
         CosmeticIngredients $cosmeticIngredients,
         Json $json
-
     )
     {
         $this->serialize = $json;
@@ -55,16 +64,20 @@ class Save extends Action
         $saveData = [
             'name' => $ingredient['name'],
             'describe' => $ingredient['describe'],
-            'img'=> $ingredient['img']
+            'img' => $ingredient['img']
         ];
         try {
-            if ($id){
-                $this->cosmeticIngredientsResource->load($cosmeticIngredientsModel,$id);
+            if ($id) {
+                $this->cosmeticIngredientsResource->load($cosmeticIngredientsModel, $id);
+            }
+            if ($this->getRequest()->getParam('back')) {
+                $this->messageManager->addSuccess(__('Insert Record Successfully !'));
+                $this->cosmeticIngredientsResource->save($cosmeticIngredientsModel->addData($saveData));
+                return $this->_redirect('cosmetic/ingredient/add');
             }
             $this->cosmeticIngredientsResource->save($cosmeticIngredientsModel->addData($saveData));
             return $this->_redirect('cosmetic/ingredient/index');
-        }
-        catch (\Exception $exception){
+        } catch (\Exception $exception) {
         }
     }
 }

@@ -17,10 +17,12 @@ use Magento\Store\Model\StoreManagerInterface;
 class Thumbnail extends \Magento\Ui\Component\Listing\Columns\Column
 {
     const URL_PATH_EDIT = 'cosmetic/ingredient/add/';
+
     /**
      * @var StoreManagerInterface
      */
     protected $storeManager;
+
     /**
      * @var UrlInterface
      */
@@ -50,6 +52,7 @@ class Thumbnail extends \Magento\Ui\Component\Listing\Columns\Column
     }
 
     /**
+     * get src img
      * @param array $dataSource
      * @return array
      * @throws \Magento\Framework\Exception\NoSuchEntityException
@@ -62,17 +65,16 @@ class Thumbnail extends \Magento\Ui\Component\Listing\Columns\Column
             $fieldName = 'img';
             foreach ($dataSource['data']['items'] as & $item) {
                 if (!empty($item['img'])) {
-                    $name = json_decode($item['img']);
-                    $item[$fieldName . '_src'] = $mediaUrl . 'ingredientImg/' . $name[0]->name;
+                    $imgData = json_decode($item['img']);
+                    $item[$fieldName . '_src'] = $mediaUrl . 'ingredientImg/' . $imgData[0]->name;
                     $item[$fieldName . '_alt'] = '';
                     $item[$fieldName . '_link'] = $this->url->getUrl(static::URL_PATH_EDIT, [
                         'entity_id' => $item['entity_id']
                     ]);
-                    $item[$fieldName . '_orig_src'] = $mediaUrl . 'ingredientImg/' . $name[0]->name;
+                    $item[$fieldName . '_orig_src'] = $mediaUrl . 'ingredientImg/' . $imgData[0]->name;
                 }
             }
         }
         return $dataSource;
     }
-
 }

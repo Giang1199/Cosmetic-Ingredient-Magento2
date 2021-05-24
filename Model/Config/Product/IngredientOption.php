@@ -44,6 +44,7 @@ class IngredientOption extends AbstractSource
 
     /**
      * @return array
+     * get Collection to set value and label for attribute
      */
     public function getAllOptions()
     {

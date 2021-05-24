@@ -63,10 +63,10 @@ class Delete extends Action
     public function execute()
     {
         $cosmeticIngredientsModel = $this->cosmeticIngredientsModel->create();
-        $data = $this->filter->getCollection($this->collection->create());
+        $selectedData = $this->filter->getCollection($this->collection->create());
         $total = 0;
         $err = 0;
-        foreach ($data->getItems() as $item) {
+        foreach ($selectedData->getItems() as $item) {
             try {
                 $selectedId = $item->getData('entity_id');
                 $this->cosmeticIngredientsResource->delete($cosmeticIngredientsModel->load($selectedId));
