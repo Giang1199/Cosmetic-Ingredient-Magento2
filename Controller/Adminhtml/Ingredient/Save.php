@@ -73,7 +73,7 @@ class Save extends Action
             if ($this->getRequest()->getParam('back')) {
                 $this->messageManager->addSuccess(__('Insert Record Successfully !'));
                 $this->cosmeticIngredientsResource->save($cosmeticIngredientsModel->addData($saveData));
-                return $this->_redirect('cosmetic/ingredient/add');
+                return $this->_redirect('cosmetic/ingredient/add/entity_id/' . $id);
             }
             $this->cosmeticIngredientsResource->save($cosmeticIngredientsModel->addData($saveData));
             return $this->_redirect('cosmetic/ingredient/index');
