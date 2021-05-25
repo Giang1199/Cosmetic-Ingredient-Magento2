@@ -7,19 +7,16 @@ $convertedAttributeValue = $block->getCurrentProduct();
 
 $ingredientModel = $block->getModel();
 $ingredientResource = $block->getResourceModel();
+$img = $block->getImg();
 ?>
 <?php
 
 if ($block->getAttributeSet() == 15) { //Check if not be attribute set id ingredient cosmetic then hide detail product tab ingredient in front end
     ?>
-    <p><?php foreach ($convertedAttributeValue as $value) {
-            $value = json_decode($value);
-            $ingredientResource->load($ingredientModel, $value);
-            $modelData = $ingredientModel->getData();
-            $img = json_decode($modelData['img'])[0]->name;
+    <p><?php foreach ($img as $value) {
             ?>
             <img style="width: 150px ; height: 150px"
-                 src="https://magento242.local/media/ingredientImg/<?php echo $img; ?>">
+                 src="https://magento242.local/media/ingredientImg/<?php echo $value; ?>">
             <?
         }
         ?>

@@ -55,22 +55,22 @@ class ProductInfo extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * @return mixed|null
+     * @return attribute set id
      */
     public function getAttributeSet()
     {
-        $productInfo =  $this->_registry->registry('current_product');
+        $productInfo = $this->_registry->registry('current_product');
         return $productInfo->getData('attribute_set_id');
     }
 
     /**
-     * @return false|string[]
+     * @return array data
      */
     public function getCurrentProduct()
     {
-        $productInfo =  $this->_registry->registry('current_product');
-        $currentAttributeValue =  $productInfo->getData('ingredient_cosmetic_attribute');
-        $convertedAttributeValue =  explode(',', $currentAttributeValue);
+        $productInfo = $this->_registry->registry('current_product');
+        $currentAttributeValue = $productInfo->getData('ingredient_cosmetic_attribute');
+        $convertedAttributeValue = explode(',', $currentAttributeValue);
         return $convertedAttributeValue;
     }
 
@@ -90,4 +90,19 @@ class ProductInfo extends \Magento\Framework\View\Element\Template
         return $this->ingredientResourse;
     }
 
+    /**
+     * @return array data img
+     */
+    public function getImg()
+    {
+        $currentProduct = $this->getCurrentProduct();
+        foreach ($currentProduct as $value) {
+            $value = json_decode($value);
+            $ingredientModel = $this->ingredientModel->create();
+            $this->getResourceModel()->load($ingredientModel, $value);
+            $modelData = $ingredientModel->getData();
+            $img[] = json_decode($modelData['img'])[0]->name;
+        }
+        return $img;
+    }
 }
