@@ -3,7 +3,7 @@
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceBlock name="product.info.details">
-            <block class="Magento\Catalog\Block\Product\View" name="custom.tab"
+            <block class="Dtn\Cosmetic\Block\ProductInfo" name="custom.tab"
                    template="Dtn_Cosmetic::ingredient_detail_product.phtml" group="detailed_info">
                 <arguments>
                     <argument translate="true" name="title" xsi:type="string">Ingredient</argument>

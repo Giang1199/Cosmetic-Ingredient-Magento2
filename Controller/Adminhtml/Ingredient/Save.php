@@ -19,7 +19,7 @@ class Save extends Action
     /**
      * @var CosmeticIngredientsFactory
      */
-    protected $cosmeticIngredientsModel;
+    protected $cosmeticIngredientsFactory;
 
     /**
      * @var CosmeticIngredients
@@ -43,7 +43,7 @@ class Save extends Action
     {
         $this->serialize = $json;
         $this->cosmeticIngredientsResource = $cosmeticIngredients;
-        $this->cosmeticIngredientsModel = $cosmeticIngredientsFactory;
+        $this->cosmeticIngredientsFactory = $cosmeticIngredientsFactory;
         parent::__construct($context);
     }
 
@@ -52,7 +52,7 @@ class Save extends Action
      */
     public function execute()
     {
-        $cosmeticIngredientsModel = $this->cosmeticIngredientsModel->create();
+        $cosmeticIngredientsFactory = $this->cosmeticIngredientsFactory->create();
         $ingredient = $this->getRequest()->getPost();
 
         // Get id from url
@@ -68,14 +68,14 @@ class Save extends Action
         ];
         try {
             if ($id) {
-                $this->cosmeticIngredientsResource->load($cosmeticIngredientsModel, $id);
+                $this->cosmeticIngredientsResource->load($cosmeticIngredientsFactory, $id);
             }
             if ($this->getRequest()->getParam('back')) {
                 $this->messageManager->addSuccess(__('Insert Record Successfully !'));
-                $this->cosmeticIngredientsResource->save($cosmeticIngredientsModel->addData($saveData));
-                return $this->_redirect('cosmetic/ingredient/add/entity_id/' . $id);
+                $this->cosmeticIngredientsResource->save($cosmeticIngredientsFactory->addData($saveData));
+                return $this->_redirect('cosmetic/ingredient/add/entity_id' . $id);
             }
-            $this->cosmeticIngredientsResource->save($cosmeticIngredientsModel->addData($saveData));
+            $this->cosmeticIngredientsResource->save($cosmeticIngredientsFactory->addData($saveData));
             return $this->_redirect('cosmetic/ingredient/index');
         } catch (\Exception $exception) {
         }

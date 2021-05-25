@@ -55,19 +55,23 @@ class ProductInfo extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * @return current category infomation
+     * @return mixed|null
      */
-    public function getCurrentCategory()
+    public function getAttributeSet()
     {
-        return $this->_registry->registry('current_category');
+        $productInfo =  $this->_registry->registry('current_product');
+        return $productInfo->getData('attribute_set_id');
     }
 
     /**
-     * @return current product infomation
+     * @return false|string[]
      */
     public function getCurrentProduct()
     {
-        return $this->_registry->registry('current_product');
+        $productInfo =  $this->_registry->registry('current_product');
+        $currentAttributeValue =  $productInfo->getData('ingredient_cosmetic_attribute');
+        $convertedAttributeValue =  explode(',', $currentAttributeValue);
+        return $convertedAttributeValue;
     }
 
     /**
@@ -85,4 +89,5 @@ class ProductInfo extends \Magento\Framework\View\Element\Template
     {
         return $this->ingredientResourse;
     }
+
 }

@@ -20,7 +20,7 @@ class Delete extends Action
     /**
      * @var CosmeticIngredientsFactory
      */
-    protected $cosmeticIngredientsModel;
+    protected $cosmeticIngredientsFactory;
 
     /**
      * @var CollectionFactory
@@ -37,7 +37,7 @@ class Delete extends Action
      * @param Context $context
      * @param Filter $filter
      * @param CollectionFactory $collectionFactory
-     * @param CosmeticIngredientsFactory $cosmeticIngredientsModel
+     * @param CosmeticIngredientsFactory $cosmeticIngredientsFactory
      * @param CosmeticIngredients $cosmeticIngredientsResource
      */
     public function __construct
@@ -45,11 +45,11 @@ class Delete extends Action
         Context $context,
         Filter $filter,
         CollectionFactory $collectionFactory,
-        CosmeticIngredientsFactory $cosmeticIngredientsModel,
+        CosmeticIngredientsFactory $cosmeticIngredientsFactory,
         CosmeticIngredients $cosmeticIngredientsResource
     )
     {
-        $this->cosmeticIngredientsModel = $cosmeticIngredientsModel;
+        $this->cosmeticIngredientsFactory = $cosmeticIngredientsFactory;
         $this->cosmeticIngredientsResource = $cosmeticIngredientsResource;
         $this->collection = $collectionFactory;
         $this->filter = $filter;
@@ -62,14 +62,14 @@ class Delete extends Action
      */
     public function execute()
     {
-        $cosmeticIngredientsModel = $this->cosmeticIngredientsModel->create();
+        $cosmeticIngredientsFactory = $this->cosmeticIngredientsFactory->create();
         $selectedData = $this->filter->getCollection($this->collection->create());
         $total = 0;
         $err = 0;
         foreach ($selectedData->getItems() as $item) {
             try {
                 $selectedId = $item->getData('entity_id');
-                $this->cosmeticIngredientsResource->delete($cosmeticIngredientsModel->load($selectedId));
+                $this->cosmeticIngredientsResource->delete($cosmeticIngredientsFactory->load($selectedId));
                 $total++;
             } catch (\Exception $exception) {
                 $err++;
